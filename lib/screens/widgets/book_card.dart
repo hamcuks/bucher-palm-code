@@ -20,39 +20,53 @@ class BookCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
           children: [
-            Container(
-              width: 80,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            const SizedBox(width: 16),
-
-            /// Display the book's title and author
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  "Book Title",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                Container(
+                  width: 80,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                const SizedBox(height: 8),
-                _createBookInfo(Icons.person_2_outlined, "Author"),
-                const SizedBox(height: 4),
-                _createBookInfo(Icons.translate, "EN, FR"),
-                const SizedBox(height: 4),
-                _createBookInfo(Icons.download_rounded, "860 Downloads")
+                const SizedBox(width: 16),
+
+                /// Display the book's title and author
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Book Title",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    _createBookInfo(Icons.person_2_outlined, "Author"),
+                    const SizedBox(height: 4),
+                    _createBookInfo(Icons.translate, "EN, FR"),
+                    const SizedBox(height: 4),
+                    _createBookInfo(Icons.download_rounded, "860 Downloads")
+                  ],
+                ),
               ],
+            ),
+            Positioned(
+              right: -8,
+              top: -8,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.favorite_outline,
+                ),
+              ),
             ),
           ],
         ),
