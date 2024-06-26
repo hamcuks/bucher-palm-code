@@ -11,9 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Bucher - Palm Code',
-      home: MainScreen(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.blue.shade50,
+      ),
+      home: const MainScreen(),
     );
   }
 }
@@ -29,7 +32,6 @@ class MainScreen extends StatelessWidget {
       valueListenable: tabBarMenuIndex,
       builder: (context, state, _) {
         return Scaffold(
-          backgroundColor: Colors.grey[100],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state,
             onTap: (value) => tabBarMenuIndex.value = value,
@@ -44,7 +46,7 @@ class MainScreen extends StatelessWidget {
                 backgroundColor: Colors.red,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border),
+                icon: const Icon(Icons.favorite_border),
                 activeIcon: Icon(
                   Icons.favorite,
                   color: Colors.redAccent.withOpacity(.7),
