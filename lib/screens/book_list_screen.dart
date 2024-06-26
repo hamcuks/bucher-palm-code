@@ -17,10 +17,10 @@ class BookListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Bucher",
+                  "Books",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 AppInputForm(
                   hintText: "Find Books",
                 ),
@@ -29,7 +29,7 @@ class BookListScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.all(16),
               itemBuilder: (context, index) => const BookCard(),
               separatorBuilder: (_, __) => const SizedBox(height: 16),
               itemCount: 32,
