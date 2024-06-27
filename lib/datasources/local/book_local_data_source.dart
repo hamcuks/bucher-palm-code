@@ -78,7 +78,16 @@ class BookLocalDataSource {
       final isar = _database.isar;
 
       await isar.writeTxn(() async {
-        await isar.Books.putAll(items);
+        /// Iterate the book items then check the existing data.
+        ///
+        /// We only put or store the data if not exist in database
+        for (final item in items) {
+          final data = await isar.Books.get(item.id);
+
+          if (data != null) return;
+
+          await isar.Books.put(item);
+        }
       });
 
       return true;
