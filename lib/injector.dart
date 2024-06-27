@@ -1,3 +1,4 @@
+import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
 import 'package:bucher_palm_code/blocs/get_book/get_book_bloc.dart';
 import 'package:bucher_palm_code/datasources/local/book_local_data_source.dart';
 import 'package:bucher_palm_code/datasources/remote/book_remote_data_source.dart';
@@ -33,5 +34,8 @@ void setupDependency() {
   /// BLoCs
   sl.registerLazySingleton<GetBookBloc>(
     () => GetBookBloc(sl<BookRepository>()),
+  );
+  sl.registerLazySingleton<AddMyBooksBloc>(
+    () => AddMyBooksBloc(sl<BookRepository>()),
   );
 }
