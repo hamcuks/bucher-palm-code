@@ -53,7 +53,7 @@ class ListBookView extends StatelessWidget {
         return BlocConsumer<AddMyBooksBloc, AddMyBooksState>(
           listener: (context, myBookState) {
             if (myBookState.status.isError || myBookState.status.isSuccess) {
-              sl<GetBookBloc>().add(GetBookProccessed());
+              sl<GetBookBloc>().add(GetBookProccessed(isFavorite: isFavorite));
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(myBookState.message!),
