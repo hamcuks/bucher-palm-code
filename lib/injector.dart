@@ -27,7 +27,6 @@ void setupDependency() {
     () => BookRepository(
       remoteDataSource: sl<BookRemoteDataSource>(),
       localDataSource: sl<BookLocalDataSource>(),
-      database: sl<DatabaseManager>(),
     ),
   );
 
