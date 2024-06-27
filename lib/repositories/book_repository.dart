@@ -19,6 +19,18 @@ class BookRepository {
     return InternetConnection().hasInternetAccess;
   }
 
+  /// Return Single data of Book Model
+  ///
+  /// Params: required id
+  Future<BookModel?> findOne(int id) async {
+    try {
+      /// Return data from local data source
+      return await _local.findOne(id: id);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Return List of Book Model
   ///
   /// Params: optional page, search param

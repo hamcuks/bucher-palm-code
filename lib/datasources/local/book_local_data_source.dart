@@ -7,6 +7,17 @@ class BookLocalDataSource {
 
   const BookLocalDataSource(DatabaseManager database) : _database = database;
 
+  /// Return single data of Book Model
+  Future<BookModel?> findOne({required int id}) async {
+    try {
+      final collection = _database.isar.Books;
+
+      return collection.get(id);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Return List of Book Model
   Future<List<BookModel>> getAll({
     required int page,
