@@ -1,5 +1,6 @@
 import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
 import 'package:bucher_palm_code/blocs/find_one/find_one_book_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -63,8 +64,7 @@ class BookDetailScreen extends StatelessWidget {
                         },
                         child: IconButton(
                           onPressed: () {
-                            if (!isSuccess) return;
-                            if (isDataNull) return;
+                            if (!isSuccess || isDataNull) return;
 
                             if (data.isFavourite) {
                               sl<AddMyBooksBloc>()
@@ -90,30 +90,36 @@ class BookDetailScreen extends StatelessWidget {
                       children: [
                         /// Book cover
                         Container(
-                            width: 128,
-                            height: 172,
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade300,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                  color: Colors.blue.shade400, width: 2),
-                              image: (isSuccess &&
-                                      !isDataNull &&
-                                      data.formats.image != null)
-                                  ? DecorationImage(
-                                      image: NetworkImage(data.formats.image!),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : null,
-                            ),
-                            child: (isSuccess &&
-                                    !isDataNull &&
-                                    data.formats.image == null)
-                                ? Icon(
-                                    Icons.image,
+                          width: 128,
+                          height: 172,
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade300,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                color: Colors.blue.shade400, width: 2),
+                          ),
+                          child: () {
+                            if (!isSuccess || isDataNull) return null;
+
+                            if (data.formats.image != null) {
+                              return CachedNetworkImage(
+                                imageUrl: data.formats.image!,
+                                fit: BoxFit.cover,
+                                errorWidget: (_, __, ___) {
+                                  return Icon(
+                                    Icons.broken_image_outlined,
                                     color: Colors.blue.shade900,
-                                  )
-                                : null),
+                                  );
+                                },
+                              );
+                            } else {
+                              return Icon(
+                                Icons.image,
+                                color: Colors.blue.shade900,
+                              );
+                            }
+                          }(),
+                        ),
 
                         const SizedBox(height: 24),
 

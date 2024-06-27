@@ -1,6 +1,7 @@
 import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
 import 'package:bucher_palm_code/models/book_model.dart';
 import 'package:bucher_palm_code/screens/book_detail_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../injector.dart';
@@ -46,19 +47,28 @@ class BookCard extends StatelessWidget {
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.blue.shade400),
-                      image: (data != null && data!.formats.image != null)
-                          ? DecorationImage(
-                              image: NetworkImage(data!.formats.image!),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
                     ),
-                    child: (data != null && data!.formats.image == null)
-                        ? Icon(
-                            Icons.image,
-                            color: Colors.grey.shade400,
-                          )
-                        : null,
+                    child: () {
+                      if (data == null) return null;
+
+                      if (data!.formats.image != null) {
+                        return CachedNetworkImage(
+                          imageUrl: data!.formats.image!,
+                          fit: BoxFit.cover,
+                          errorWidget: (_, __, ___) {
+                            return Icon(
+                              Icons.broken_image_outlined,
+                              color: Colors.grey.shade400,
+                            );
+                          },
+                        );
+                      } else {
+                        return Icon(
+                          Icons.image,
+                          color: Colors.grey.shade400,
+                        );
+                      }
+                    }(),
                   ),
                   const SizedBox(width: 16),
 
