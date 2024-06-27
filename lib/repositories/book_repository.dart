@@ -22,24 +22,33 @@ class BookRepository {
   /// Return List of Book Model
   ///
   /// Params: optional page, search param
-  Future<List<BookModel>> getAll({required int page, String? search}) async {
+  Future<List<BookModel>> getAll(
+      {required int page, String? search, bool isFavorite = false}) async {
     try {
       late ApiResponse<BookModel> data;
 
-      /// If has internet, then get the book data from remote data source
-      if (await _hasInternet) {
+      /// If has internet and not favourite, then get the book data from remote data source
+      if (await _hasInternet && !isFavorite) {
         data = await _remote.getAll(page: page, search: search);
 
         /// Store the book data into database
         _local.store(data.results);
       }
 
+      List<BookModel> items = [];
+
+      if (isFavorite) {
+        items = await _local.getMyBooks(page: page, perPage: 32);
+      } else {
+        items = await _local.getAll(
+          page: page,
+          perPage: 32,
+          search: search,
+        );
+      }
+
       /// Return data from local data source
-      return await _local.getAll(
-        page: page,
-        perPage: 32,
-        search: search,
-      );
+      return items;
     } catch (e) {
       rethrow;
     }

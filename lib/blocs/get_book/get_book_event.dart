@@ -6,6 +6,11 @@ sealed class GetBookEvent {}
 class GetBookProccessed extends GetBookEvent {
   final int page;
   final String? search;
+  final bool isFavorite;
 
-  GetBookProccessed({this.page = 1, this.search});
+  GetBookProccessed({
+    this.page = 1,
+    this.search,
+    this.isFavorite = true,
+  });
 }

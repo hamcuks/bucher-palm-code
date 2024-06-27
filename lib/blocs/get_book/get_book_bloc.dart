@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:bucher_palm_code/models/book_model.dart';
 import 'package:bucher_palm_code/repositories/book_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'get_book_event.dart';
@@ -22,7 +22,11 @@ class GetBookBloc extends Bloc<GetBookEvent, GetBookState> {
       emit(state.copyWith(status: GetBookStatus.loading));
 
       /// Get the data from repository
-      final items = await _repo.getAll(page: event.page, search: event.search);
+      final items = await _repo.getAll(
+        page: event.page,
+        search: event.search,
+        isFavorite: event.isFavorite,
+      );
 
       /// Change current status to success and emit the data
       emit(state.copyWith(status: GetBookStatus.success, items: items));
