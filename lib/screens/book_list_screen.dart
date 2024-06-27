@@ -16,18 +16,21 @@ class BookListScreen extends StatelessWidget {
       bottom: false,
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16),
+          Padding(
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Books",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 AppInputForm(
                   hintText: "Find Books",
+                  onChanged: (val) => sl<GetBookBloc>().add(
+                    GetBookProccessed(search: val),
+                  ),
                 ),
               ],
             ),
