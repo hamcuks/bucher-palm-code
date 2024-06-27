@@ -19,7 +19,12 @@ class BookRemoteDataSource {
       final response = await _dio.get('https://gutendex.com/books/?page=$page');
 
       /// Parse the response data using ApiResponse fromJson method
-      return ApiResponse<BookModel>.fromJson(response.data);
+      return ApiResponse<BookModel>.fromJson(
+        response.data,
+        results: List<BookModel>.from(
+          response.data['results'].map((x) => BookModel.fromJson(x)),
+        ),
+      );
     } catch (e) {
       log("Error: $e");
 
