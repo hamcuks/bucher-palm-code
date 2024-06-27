@@ -183,7 +183,11 @@ class BookDetailScreen extends StatelessWidget {
   }) {
     return Column(
       children: [
-        Icon(icon, size: 20),
+        Icon(
+          icon,
+          size: 20,
+          color: Colors.black.withOpacity(0.5),
+        ),
         const SizedBox(height: 8),
         Text(
           value,
@@ -196,7 +200,7 @@ class BookDetailScreen extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: Colors.black.withOpacity(0.8),
+            color: Colors.black.withOpacity(0.5),
           ),
         ),
       ],

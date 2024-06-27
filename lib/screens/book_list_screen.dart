@@ -38,6 +38,7 @@ class BookListScreen extends StatelessWidget {
           Expanded(
             child: BlocBuilder<GetBookBloc, GetBookState>(
               bloc: sl<GetBookBloc>()..add(GetBookProccessed()),
+              buildWhen: (previous, current) => previous != current,
               builder: (context, state) {
                 /// Display error message if error occurred
                 if (state.status.isError) {
