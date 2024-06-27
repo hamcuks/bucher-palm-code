@@ -17,7 +17,7 @@ class BookModel {
   final List<String> languages;
   final BookFormatModel formats;
   final int downloadCount;
-  final bool isFavourite;
+  bool isFavourite;
 
   BookModel({
     required this.id,

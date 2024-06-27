@@ -63,4 +63,27 @@ class BookLocalDataSource {
       rethrow;
     }
   }
+
+  /// Return true if proccess success
+  ///
+  /// Params: required id
+  Future<bool> addToMyBooks(int id) async {
+    try {
+      final isar = _database.isar;
+
+      await isar.writeTxn(() async {
+        BookModel? data = await isar.Books.get(id);
+
+        if (data == null) return;
+
+        data.isFavourite = !data.isFavourite;
+
+        await isar.Books.put(data);
+      });
+
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

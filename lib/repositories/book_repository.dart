@@ -44,4 +44,15 @@ class BookRepository {
       rethrow;
     }
   }
+
+  /// Add book data as favourite
+  ///
+  /// Params: required id
+  Future addToMyBooks(int id) async {
+    try {
+      await _local.addToMyBooks(id);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
