@@ -4,7 +4,7 @@
 class ApiResponse<T> {
   final int count;
   final String next;
-  final String previous;
+  final String? previous;
   final List<T> results;
 
   ApiResponse({
