@@ -1,3 +1,4 @@
+import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
 import 'package:bucher_palm_code/blocs/find_one/find_one_book_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ class BookDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: BlocBuilder<FindOneBookBloc, FindOneBookState>(
           bloc: sl<FindOneBookBloc>()..add(FindOneBookProccessed(id)),
+          buildWhen: (previous, current) => previous != current,
           builder: (context, state) {
             /// Display error message if error occurred
             if (state.status.isError) {
@@ -51,13 +53,33 @@ class BookDetailScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: Colors.white,
                       ),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          (isSuccess && !isDataNull && data.isFavourite)
-                              ? Icons.favorite
-                              : Icons.favorite_border_outlined,
-                          color: Colors.red,
+                      child: BlocListener<AddMyBooksBloc, AddMyBooksState>(
+                        listener: (context, state) {
+                          if (state.status.isError || state.status.isSuccess) {
+                            /// Call or refresh the data after change the favourite state
+                            sl<FindOneBookBloc>()
+                                .add(FindOneBookProccessed(id));
+                          }
+                        },
+                        child: IconButton(
+                          onPressed: () {
+                            if (!isSuccess) return;
+                            if (isDataNull) return;
+
+                            if (data.isFavourite) {
+                              sl<AddMyBooksBloc>()
+                                  .add(RemoveMyBooksPressed(data.id));
+                            } else {
+                              sl<AddMyBooksBloc>()
+                                  .add(AddMyBooksPressed(data.id));
+                            }
+                          },
+                          icon: Icon(
+                            (isSuccess && !isDataNull && data.isFavourite)
+                                ? Icons.favorite
+                                : Icons.favorite_border_outlined,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                     ),

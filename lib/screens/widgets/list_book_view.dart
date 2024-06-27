@@ -50,7 +50,7 @@ class ListBookView extends StatelessWidget {
         }
 
         /// Otherwise, display the book data
-        return BlocConsumer<AddMyBooksBloc, AddMyBooksState>(
+        return BlocListener<AddMyBooksBloc, AddMyBooksState>(
           listener: (context, myBookState) {
             if (myBookState.status.isError || myBookState.status.isSuccess) {
               sl<GetBookBloc>().add(GetBookProccessed(isFavorite: isFavorite));
@@ -61,16 +61,14 @@ class ListBookView extends StatelessWidget {
               );
             }
           },
-          builder: (context, myBookState) {
-            return ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (context, index) => BookCard(
-                data: state.items.elementAt(index),
-              ),
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemCount: state.items.length,
-            );
-          },
+          child: ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemBuilder: (context, index) => BookCard(
+              data: state.items.elementAt(index),
+            ),
+            separatorBuilder: (_, __) => const SizedBox(height: 16),
+            itemCount: state.items.length,
+          ),
         );
       },
     );
