@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bucher_palm_code/models/book_model.dart';
 import 'package:bucher_palm_code/screens/book_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +51,19 @@ class BookCard extends StatelessWidget {
                           ? DecorationImage(
                               image: NetworkImage(data!.formats.image!),
                               fit: BoxFit.cover,
+                              onError: (exception, stackTrace) => log(
+                                "Error",
+                                stackTrace: stackTrace,
+                              ),
                             )
                           : null,
                     ),
+                    child: (data != null && data!.formats.image == null)
+                        ? Icon(
+                            Icons.image,
+                            color: Colors.grey.shade400,
+                          )
+                        : null,
                   ),
                   const SizedBox(width: 16),
 

@@ -47,20 +47,26 @@ class BookDetailScreen extends StatelessWidget {
                 children: [
                   /// Book cover
                   Container(
-                    width: 128,
-                    height: 172,
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade300,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.blue.shade400, width: 2),
-                      image: (data.formats.image != null)
-                          ? DecorationImage(
-                              image: NetworkImage(data.formats.image!),
-                              fit: BoxFit.cover,
+                      width: 128,
+                      height: 172,
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade300,
+                        borderRadius: BorderRadius.circular(16),
+                        border:
+                            Border.all(color: Colors.blue.shade400, width: 2),
+                        image: (data.formats.image != null)
+                            ? DecorationImage(
+                                image: NetworkImage(data.formats.image!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      child: (data.formats.image == null)
+                          ? Icon(
+                              Icons.image,
+                              color: Colors.blue.shade900,
                             )
-                          : null,
-                    ),
-                  ),
+                          : null),
 
                   const SizedBox(height: 24),
 
