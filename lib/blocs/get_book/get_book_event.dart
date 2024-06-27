@@ -11,6 +11,6 @@ class GetBookProccessed extends GetBookEvent {
   GetBookProccessed({
     this.page = 1,
     this.search,
-    this.isFavorite = true,
+    this.isFavorite = false,
   });
 }

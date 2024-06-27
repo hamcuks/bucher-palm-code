@@ -24,7 +24,6 @@ class FindOneBookBloc extends Bloc<FindOneBookEvent, FindOneBookState> {
 
       /// Get the data from repository
       final item = await _repo.findOne(event.id);
-      print("Data: $item");
 
       /// Change current status to success and emit the data
       emit(state.copyWith(status: FindOneBookStatus.success, item: item));
