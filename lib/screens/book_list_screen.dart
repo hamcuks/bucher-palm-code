@@ -1,3 +1,4 @@
+import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
 import 'package:bucher_palm_code/blocs/get_book/get_book_bloc.dart';
 import 'package:bucher_palm_code/screens/widgets/app_input_form.dart';
 import 'package:bucher_palm_code/screens/widgets/book_card.dart';
@@ -58,13 +59,28 @@ class BookListScreen extends StatelessWidget {
                 }
 
                 /// Otherwise, display the book data
-                return ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemBuilder: (context, index) => BookCard(
-                    data: state.items.elementAt(index),
-                  ),
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemCount: state.items.length,
+                return BlocConsumer<AddMyBooksBloc, AddMyBooksState>(
+                  listener: (context, myBookState) {
+                    if (myBookState.status.isError ||
+                        myBookState.status.isSuccess) {
+                      sl<GetBookBloc>().add(GetBookProccessed());
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(myBookState.message!),
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, myBookState) {
+                    return ListView.separated(
+                      padding: const EdgeInsets.all(16),
+                      itemBuilder: (context, index) => BookCard(
+                        data: state.items.elementAt(index),
+                      ),
+                      separatorBuilder: (_, __) => const SizedBox(height: 16),
+                      itemCount: state.items.length,
+                    );
+                  },
                 );
               },
             ),

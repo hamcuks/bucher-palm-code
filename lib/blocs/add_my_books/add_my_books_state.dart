@@ -14,11 +14,18 @@ extension AddMyBooksStatusX on AddMyBooksStatus {
 /// This class represent the BLoC state of GetBoot
 class AddMyBooksState {
   final AddMyBooksStatus status;
+  final String? message;
 
-  const AddMyBooksState({this.status = AddMyBooksStatus.initial});
+  const AddMyBooksState({
+    this.status = AddMyBooksStatus.initial,
+    this.message,
+  });
 
   /// copyWith method to manipulate current data with the new one
-  AddMyBooksState copyWith({AddMyBooksStatus? status}) {
-    return AddMyBooksState(status: status ?? this.status);
+  AddMyBooksState copyWith({AddMyBooksStatus? status, String? message}) {
+    return AddMyBooksState(
+      status: status ?? this.status,
+      message: message ?? this.message,
+    );
   }
 }

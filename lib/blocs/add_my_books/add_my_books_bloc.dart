@@ -12,6 +12,7 @@ class AddMyBooksBloc extends Bloc<AddMyBooksEvent, AddMyBooksState> {
       : _repo = repository,
         super(const AddMyBooksState()) {
     on<AddMyBooksPressed>(_onAddMyBooksPressed);
+    on<RemoveMyBooksPressed>(_onRemoveMyBooksPressed);
   }
 
   void _onAddMyBooksPressed(
@@ -19,9 +20,32 @@ class AddMyBooksBloc extends Bloc<AddMyBooksEvent, AddMyBooksState> {
     try {
       emit(state.copyWith(status: AddMyBooksStatus.loading));
       await _repo.addToMyBooks(event.id);
-      emit(state.copyWith(status: AddMyBooksStatus.success));
+      emit(state.copyWith(
+        status: AddMyBooksStatus.success,
+        message: "Book added to My Books successfully!",
+      ));
     } catch (e) {
-      emit(state.copyWith(status: AddMyBooksStatus.error));
+      emit(state.copyWith(
+        status: AddMyBooksStatus.error,
+        message: "Can not add book to My Books!",
+      ));
+    }
+  }
+
+  void _onRemoveMyBooksPressed(
+      RemoveMyBooksPressed event, Emitter<AddMyBooksState> emit) async {
+    try {
+      emit(state.copyWith(status: AddMyBooksStatus.loading));
+      await _repo.addToMyBooks(event.id);
+      emit(state.copyWith(
+        status: AddMyBooksStatus.success,
+        message: "Book removed from My Books successfully!",
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: AddMyBooksStatus.error,
+        message: "Can not remove book from My Books!",
+      ));
     }
   }
 }

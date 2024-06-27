@@ -8,3 +8,9 @@ class AddMyBooksPressed extends AddMyBooksEvent {
 
   AddMyBooksPressed(this.id);
 }
+
+class RemoveMyBooksPressed extends AddMyBooksEvent {
+  final int id;
+
+  RemoveMyBooksPressed(this.id);
+}

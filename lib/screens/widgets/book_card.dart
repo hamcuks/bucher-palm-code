@@ -1,8 +1,9 @@
-import 'dart:developer';
-
+import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
 import 'package:bucher_palm_code/models/book_model.dart';
 import 'package:bucher_palm_code/screens/book_detail_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../injector.dart';
 
 class BookCard extends StatelessWidget {
   final BookModel? data;
@@ -51,10 +52,6 @@ class BookCard extends StatelessWidget {
                           ? DecorationImage(
                               image: NetworkImage(data!.formats.image!),
                               fit: BoxFit.cover,
-                              onError: (exception, stackTrace) => log(
-                                "Error",
-                                stackTrace: stackTrace,
-                              ),
                             )
                           : null,
                     ),
@@ -117,12 +114,21 @@ class BookCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 0),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.favorite_outline,
-              ),
-            )
+            if (data != null) ...[
+              IconButton(
+                onPressed: () {
+                  if (data!.isFavourite) {
+                    sl<AddMyBooksBloc>().add(RemoveMyBooksPressed(data!.id));
+                  } else {
+                    sl<AddMyBooksBloc>().add(AddMyBooksPressed(data!.id));
+                  }
+                },
+                icon: Icon(
+                  data!.isFavourite ? Icons.favorite : Icons.favorite_outline,
+                  color: data!.isFavourite ? Colors.red : null,
+                ),
+              )
+            ]
           ],
         ),
       ),
