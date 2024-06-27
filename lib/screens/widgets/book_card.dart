@@ -12,10 +12,16 @@ class BookCard extends StatelessWidget {
     /// Create card with roundend and white background
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const BookDetailScreen()),
-        );
+        if (data != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BookDetailScreen(
+                data: data!,
+              ),
+            ),
+          );
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(16),

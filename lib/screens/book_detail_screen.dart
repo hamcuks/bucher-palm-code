@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import '../models/book_model.dart';
 
 class BookDetailScreen extends StatelessWidget {
-  const BookDetailScreen({super.key});
+  final BookModel data;
+
+  const BookDetailScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -50,25 +52,31 @@ class BookDetailScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.blue.shade300,
                       borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.blue.shade400, width: 2),
+                      image: DecorationImage(
+                        image: NetworkImage(data.formats.image),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
 
                   const SizedBox(height: 24),
 
                   /// Book Title
-                  const Text(
-                    "Book Title",
-                    style: TextStyle(
+                  Text(
+                    data.title,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
 
                   /// Book Author
                   Text(
-                    "Author",
+                    data.authors.map((x) => x.name).join(", "),
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black.withOpacity(0.8),
@@ -84,17 +92,19 @@ class BookDetailScreen extends StatelessWidget {
                       _bookInfo(
                         icon: Icons.copyright_outlined,
                         label: "Copyright",
-                        value: "Yes",
+                        value: data.copyright != null && data.copyright!
+                            ? "Yes"
+                            : "No",
                       ),
                       _bookInfo(
                         icon: Icons.translate,
                         label: "Languages",
-                        value: "EN, FR, ID",
+                        value: data.languages.join(", ").toUpperCase(),
                       ),
                       _bookInfo(
                         icon: Icons.download_rounded,
                         label: "Downloads",
-                        value: "8999",
+                        value: data.downloadCount.toString(),
                       ),
                     ],
                   ),
