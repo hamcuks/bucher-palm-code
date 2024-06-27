@@ -39,13 +39,18 @@ const BookModelSchema = CollectionSchema(
       type: IsarType.object,
       target: r'BookFormatModel',
     ),
-    r'languages': PropertySchema(
+    r'isFavourite': PropertySchema(
       id: 4,
+      name: r'isFavourite',
+      type: IsarType.bool,
+    ),
+    r'languages': PropertySchema(
+      id: 5,
       name: r'languages',
       type: IsarType.stringList,
     ),
     r'title': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'title',
       type: IsarType.string,
     )
@@ -116,8 +121,9 @@ void _bookModelSerialize(
     BookFormatModelSchema.serialize,
     object.formats,
   );
-  writer.writeStringList(offsets[4], object.languages);
-  writer.writeString(offsets[5], object.title);
+  writer.writeBool(offsets[4], object.isFavourite);
+  writer.writeStringList(offsets[5], object.languages);
+  writer.writeString(offsets[6], object.title);
 }
 
 BookModel _bookModelDeserialize(
@@ -143,8 +149,9 @@ BookModel _bookModelDeserialize(
         ) ??
         BookFormatModel(),
     id: id,
-    languages: reader.readStringList(offsets[4]) ?? [],
-    title: reader.readString(offsets[5]),
+    isFavourite: reader.readBoolOrNull(offsets[4]) ?? false,
+    languages: reader.readStringList(offsets[5]) ?? [],
+    title: reader.readString(offsets[6]),
   );
   return object;
 }
@@ -176,8 +183,10 @@ P _bookModelDeserializeProp<P>(
           ) ??
           BookFormatModel()) as P;
     case 4:
-      return (reader.readStringList(offset) ?? []) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 5:
+      return (reader.readStringList(offset) ?? []) as P;
+    case 6:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -493,6 +502,16 @@ extension BookModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BookModel, BookModel, QAfterFilterCondition> isFavouriteEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isFavourite',
+        value: value,
       ));
     });
   }
@@ -897,6 +916,18 @@ extension BookModelQuerySortBy on QueryBuilder<BookModel, BookModel, QSortBy> {
     });
   }
 
+  QueryBuilder<BookModel, BookModel, QAfterSortBy> sortByIsFavourite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavourite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookModel, BookModel, QAfterSortBy> sortByIsFavouriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavourite', Sort.desc);
+    });
+  }
+
   QueryBuilder<BookModel, BookModel, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -948,6 +979,18 @@ extension BookModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<BookModel, BookModel, QAfterSortBy> thenByIsFavourite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavourite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookModel, BookModel, QAfterSortBy> thenByIsFavouriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavourite', Sort.desc);
+    });
+  }
+
   QueryBuilder<BookModel, BookModel, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -972,6 +1015,12 @@ extension BookModelQueryWhereDistinct
   QueryBuilder<BookModel, BookModel, QDistinct> distinctByDownloadCount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'downloadCount');
+    });
+  }
+
+  QueryBuilder<BookModel, BookModel, QDistinct> distinctByIsFavourite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isFavourite');
     });
   }
 
@@ -1019,6 +1068,12 @@ extension BookModelQueryProperty
   QueryBuilder<BookModel, BookFormatModel, QQueryOperations> formatsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'formats');
+    });
+  }
+
+  QueryBuilder<BookModel, bool, QQueryOperations> isFavouriteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isFavourite');
     });
   }
 

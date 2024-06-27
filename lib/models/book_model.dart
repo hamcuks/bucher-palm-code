@@ -17,6 +17,7 @@ class BookModel {
   final List<String> languages;
   final BookFormatModel formats;
   final int downloadCount;
+  final bool isFavourite;
 
   BookModel({
     required this.id,
@@ -26,6 +27,7 @@ class BookModel {
     required this.languages,
     required this.formats,
     required this.downloadCount,
+    this.isFavourite = false,
   });
 
   /// Factory method to decode the JSON data
