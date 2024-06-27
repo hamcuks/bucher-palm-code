@@ -1,8 +1,12 @@
+import 'package:bucher_palm_code/blocs/get_book/get_book_bloc.dart';
+import 'package:bucher_palm_code/injector.dart';
 import 'package:bucher_palm_code/screens/book_list_screen.dart';
 import 'package:bucher_palm_code/screens/my_books_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  setupDependency();
   runApp(const MyApp());
 }
 
@@ -11,12 +15,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bucher - Palm Code',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.blue.shade50,
+    return MultiBlocProvider(
+      providers: [
+        /// Register the blocs
+        BlocProvider(create: (context) => sl<GetBookBloc>()),
+      ],
+      child: MaterialApp(
+        title: 'Bucher - Palm Code',
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.blue.shade50,
+        ),
+        home: const MainScreen(),
       ),
-      home: const MainScreen(),
     );
   }
 }
