@@ -35,7 +35,11 @@ class BookRepository {
       }
 
       /// Return data from local data source
-      return await _local.getAll();
+      return await _local.getAll(
+        page: page,
+        perPage: 32,
+        search: search,
+      );
     } catch (e) {
       rethrow;
     }

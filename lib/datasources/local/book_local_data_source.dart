@@ -7,16 +7,49 @@ class BookLocalDataSource {
 
   const BookLocalDataSource(DatabaseManager database) : _database = database;
 
-  Future<List<BookModel>> getAll() async {
+  /// Return List of Book Model
+  Future<List<BookModel>> getAll({
+    required int page,
+    required int perPage,
+    String? search,
+  }) async {
     try {
       final collection = _database.isar.Books;
 
-      return await collection.where().findAll();
+      List<FilterGroup> filters = [];
+
+      if (search != null) {
+        filters.add(
+          FilterGroup.or([
+            FilterCondition.contains(
+              property: 'title',
+              value: search,
+              caseSensitive: false,
+            ),
+            FilterCondition.contains(
+              property: 'languages',
+              value: search,
+              caseSensitive: false,
+            ),
+          ]),
+        );
+      }
+
+      final Query<BookModel> queries = collection.buildQuery(
+        filter: FilterGroup.and(filters),
+        limit: perPage,
+        offset: (page > 1) ? (page - 1) * perPage : 0,
+      );
+
+      return queries.findAll();
     } catch (e) {
       rethrow;
     }
   }
 
+  /// Return true if proccess success
+  ///
+  /// Params: required items
   Future<bool> store(List<BookModel> items) async {
     try {
       final isar = _database.isar;
