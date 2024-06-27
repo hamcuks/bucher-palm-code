@@ -1,5 +1,11 @@
+import 'package:isar/isar.dart';
+
+part 'book_format_model.g.dart';
+
 /// This model represents the Book format data that will
 /// displayed to UI
+
+@embedded
 class BookFormatModel {
   /// I only put the required data
   final String? webPages;
@@ -8,10 +14,10 @@ class BookFormatModel {
   final String? text;
 
   BookFormatModel({
-    required this.webPages,
-    required this.epub,
-    required this.image,
-    required this.text,
+    this.webPages,
+    this.epub,
+    this.image,
+    this.text,
   });
 
   /// Factory method to decode the JSON data

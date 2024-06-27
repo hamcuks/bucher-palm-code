@@ -1,11 +1,16 @@
+import 'package:isar/isar.dart';
+
 import 'book_author_model.dart';
 import 'book_format_model.dart';
 
+part 'book_model.g.dart';
+
 /// This model represents the Book data that will
 /// displayed to UI
+@Collection(accessor: "Books")
 class BookModel {
   /// I only put the required data
-  final int id;
+  final Id id;
   final String title;
   final List<BookAuthorModel> authors;
   final bool? copyright;

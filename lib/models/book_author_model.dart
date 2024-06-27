@@ -1,15 +1,21 @@
+import 'package:isar/isar.dart';
+
+part 'book_author_model.g.dart';
+
 /// This model represents the Book author data that will
 /// displayed to UI
+
+@embedded
 class BookAuthorModel {
   /// I only put the required data
-  final String name;
+  final String? name;
   final int? birthYear;
   final int? deathYear;
 
   BookAuthorModel({
-    required this.name,
-    required this.birthYear,
-    required this.deathYear,
+    this.name,
+    this.birthYear,
+    this.deathYear,
   });
 
   /// Factory method to decode the JSON data

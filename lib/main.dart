@@ -1,12 +1,22 @@
 import 'package:bucher_palm_code/blocs/get_book/get_book_bloc.dart';
 import 'package:bucher_palm_code/injector.dart';
+import 'package:bucher_palm_code/models/book_model.dart';
 import 'package:bucher_palm_code/screens/book_list_screen.dart';
 import 'package:bucher_palm_code/screens/my_books_screen.dart';
+import 'package:bucher_palm_code/services/database_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   setupDependency();
+
+  /// Open ISAR Database and register schema
+  var dir = await getApplicationDocumentsDirectory();
+  sl<DatabaseManager>().open(schemas: [BookModelSchema], directory: dir.path);
+
   runApp(const MyApp());
 }
 
