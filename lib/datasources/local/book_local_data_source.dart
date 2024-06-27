@@ -16,7 +16,7 @@ class BookLocalDataSource {
     try {
       final collection = _database.isar.Books;
 
-      List<FilterGroup> filters = [];
+      List<FilterOperation> filters = [];
 
       if (search != null) {
         filters.add(
@@ -37,6 +37,29 @@ class BookLocalDataSource {
 
       final Query<BookModel> queries = collection.buildQuery(
         filter: FilterGroup.and(filters),
+        limit: perPage,
+        offset: (page > 1) ? (page - 1) * perPage : 0,
+      );
+
+      return queries.findAll();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Return List of Book Model with isFavourite is true
+  Future<List<BookModel>> getMyBooks({
+    required int page,
+    required int perPage,
+  }) async {
+    try {
+      final collection = _database.isar.Books;
+
+      final Query<BookModel> queries = collection.buildQuery(
+        filter: const FilterCondition.equalTo(
+          property: "isFavourite",
+          value: true,
+        ),
         limit: perPage,
         offset: (page > 1) ? (page - 1) * perPage : 0,
       );
