@@ -11,10 +11,10 @@ class BookRepository {
   /// Return List of Book Model
   ///
   /// Params: optional page data
-  Future<List<BookModel>> getAll({int page = 1}) async {
+  Future<List<BookModel>> getAll({required int page}) async {
     try {
       /// Get the book data from remote data source
-      final data = await _remote.getAll();
+      final data = await _remote.getAll(page: page);
 
       return data.results;
     } catch (e) {

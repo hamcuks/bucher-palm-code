@@ -13,7 +13,7 @@ class BookRemoteDataSource {
   /// Return ApiResponse of BookModel
   ///
   /// Params: optional page data
-  Future<ApiResponse<BookModel>> getAll({int page = 1}) async {
+  Future<ApiResponse<BookModel>> getAll({required int page}) async {
     try {
       /// Perform GET HTTP request with given URL
       final response = await _dio.get('https://gutendex.com/books/?page=$page');
