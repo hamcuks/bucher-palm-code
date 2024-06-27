@@ -2,10 +2,10 @@
 /// displayed to UI
 class BookFormatModel {
   /// I only put the required data
-  final String webPages;
-  final String epub;
-  final String image;
-  final String text;
+  final String? webPages;
+  final String? epub;
+  final String? image;
+  final String? text;
 
   BookFormatModel({
     required this.webPages,

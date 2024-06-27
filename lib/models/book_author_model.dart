@@ -3,8 +3,8 @@
 class BookAuthorModel {
   /// I only put the required data
   final String name;
-  final int birthYear;
-  final int deathYear;
+  final int? birthYear;
+  final int? deathYear;
 
   BookAuthorModel({
     required this.name,

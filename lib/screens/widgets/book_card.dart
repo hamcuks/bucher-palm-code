@@ -45,9 +45,9 @@ class BookCard extends StatelessWidget {
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.blue.shade400),
-                      image: (data != null)
+                      image: (data != null && data!.formats.image != null)
                           ? DecorationImage(
-                              image: NetworkImage(data!.formats.image),
+                              image: NetworkImage(data!.formats.image!),
                               fit: BoxFit.cover,
                             )
                           : null,

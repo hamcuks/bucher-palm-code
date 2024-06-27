@@ -53,10 +53,12 @@ class BookDetailScreen extends StatelessWidget {
                       color: Colors.blue.shade300,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: Colors.blue.shade400, width: 2),
-                      image: DecorationImage(
-                        image: NetworkImage(data.formats.image),
-                        fit: BoxFit.cover,
-                      ),
+                      image: (data.formats.image != null)
+                          ? DecorationImage(
+                              image: NetworkImage(data.formats.image!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
                   ),
 

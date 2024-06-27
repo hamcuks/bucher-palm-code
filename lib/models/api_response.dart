@@ -3,7 +3,7 @@
 /// results data
 class ApiResponse<T> {
   final int count;
-  final String next;
+  final String? next;
   final String? previous;
   final List<T> results;
 
