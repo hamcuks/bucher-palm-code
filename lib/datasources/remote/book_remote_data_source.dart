@@ -12,11 +12,23 @@ class BookRemoteDataSource {
 
   /// Return ApiResponse of BookModel
   ///
-  /// Params: optional page data
-  Future<ApiResponse<BookModel>> getAll({required int page}) async {
+  /// Params: optional page, search param
+  Future<ApiResponse<BookModel>> getAll(
+      {required int page, String? search}) async {
     try {
+      Map<String, dynamic> queryParams = {
+        "page": page,
+      };
+
+      if (search != null) {
+        queryParams.addAll({"search": search});
+      }
+
       /// Perform GET HTTP request with given URL
-      final response = await _dio.get('https://gutendex.com/books/?page=$page');
+      final response = await _dio.get(
+        'https://gutendex.com/books/',
+        queryParameters: queryParams,
+      );
 
       /// Parse the response data using ApiResponse fromJson method
       return ApiResponse<BookModel>.fromJson(

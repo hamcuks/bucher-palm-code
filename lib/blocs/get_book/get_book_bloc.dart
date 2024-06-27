@@ -22,7 +22,7 @@ class GetBookBloc extends Bloc<GetBookEvent, GetBookState> {
       emit(state.copyWith(status: GetBookStatus.loading));
 
       /// Get the data from repository
-      final items = await _repo.getAll(page: event.page);
+      final items = await _repo.getAll(page: event.page, search: event.search);
 
       /// Change current status to success and emit the data
       emit(state.copyWith(status: GetBookStatus.success, items: items));

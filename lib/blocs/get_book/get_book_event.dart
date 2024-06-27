@@ -5,6 +5,7 @@ sealed class GetBookEvent {}
 
 class GetBookProccessed extends GetBookEvent {
   final int page;
+  final String? search;
 
-  GetBookProccessed({this.page = 1});
+  GetBookProccessed({this.page = 1, this.search});
 }
