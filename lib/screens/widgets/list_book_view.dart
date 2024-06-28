@@ -21,10 +21,10 @@ class ListBookView extends StatefulWidget {
 class _ListBookViewState extends State<ListBookView> {
   static const _pageSize = 10;
   int _pageKey = 1;
-  String? search;
 
   final PagingController<int, BookModel> _pagingController =
       PagingController(firstPageKey: 1);
+  late final TextEditingController _searchController;
 
   @override
   void initState() {
@@ -37,11 +37,20 @@ class _ListBookViewState extends State<ListBookView> {
         page: pageKey,
         pageSize: _pageSize,
         isFavorite: widget.isFavorite,
-        search: search,
+        search: _searchController.text,
       ));
     });
 
+    _searchController = TextEditingController();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,9 +60,12 @@ class _ListBookViewState extends State<ListBookView> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: AppInputForm(
+            controller: _searchController,
             hintText: "Find Books",
-            onChanged: (val) {
-              search = val;
+            onFieldCleared: () {
+              _pagingController.refresh();
+            },
+            onFieldSubmitted: (val) {
               _pagingController.refresh();
             },
           ),
@@ -87,6 +99,7 @@ class _ListBookViewState extends State<ListBookView> {
             builder: (context, state) {
               return RefreshIndicator(
                 onRefresh: () async {
+                  _searchController.clear();
                   _pagingController.refresh();
                 },
                 child: PagedListView<int, BookModel>.separated(

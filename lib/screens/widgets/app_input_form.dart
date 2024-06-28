@@ -3,20 +3,31 @@ import 'package:flutter/material.dart';
 class AppInputForm extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
-  final Function(String?)? onChanged;
+  final Function(String?)? onFieldSubmitted;
+  final VoidCallback? onFieldCleared;
 
-  const AppInputForm({
+  AppInputForm({
     super.key,
     this.controller,
     this.hintText,
-    this.onChanged,
+    this.onFieldSubmitted,
+    this.onFieldCleared,
   });
+
+  final ValueNotifier<bool> isFilled = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      onChanged: onChanged,
+      onFieldSubmitted: onFieldSubmitted,
+      onChanged: (value) {
+        isFilled.value = value.isNotEmpty;
+
+        if (value.isEmpty && onFieldCleared != null) {
+          onFieldCleared!();
+        }
+      },
       decoration: InputDecoration(
         hintText: hintText,
         filled: true,
@@ -33,6 +44,25 @@ class AppInputForm extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.blue.shade400),
+        ),
+        suffixIcon: ValueListenableBuilder(
+          valueListenable: isFilled,
+          builder: (context, state, child) {
+            if (state) {
+              return IconButton(
+                onPressed: () {
+                  isFilled.value = false;
+                  controller?.clear();
+                  controller?.text = "";
+
+                  if (onFieldCleared != null) onFieldCleared!();
+                },
+                icon: const Icon(Icons.close),
+              );
+            }
+
+            return const SizedBox();
+          },
         ),
       ),
     );

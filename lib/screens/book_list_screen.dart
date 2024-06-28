@@ -1,6 +1,5 @@
 import 'package:bucher_palm_code/screens/widgets/list_book_view.dart';
 import 'package:flutter/material.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class BookListScreen extends StatelessWidget {
   const BookListScreen({super.key});
