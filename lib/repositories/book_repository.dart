@@ -34,8 +34,12 @@ class BookRepository {
   /// Return List of Book Model
   ///
   /// Params: optional page, search param
-  Future<List<BookModel>> getAll(
-      {required int page, String? search, bool isFavorite = false}) async {
+  Future<List<BookModel>> getAll({
+    required int page,
+    required int pageSize,
+    String? search,
+    bool isFavorite = false,
+  }) async {
     try {
       late ApiResponse<BookModel> data;
 
@@ -52,13 +56,13 @@ class BookRepository {
       if (isFavorite) {
         items = await _local.getMyBooks(
           page: page,
-          perPage: 32,
+          perPage: pageSize,
           search: search,
         );
       } else {
         items = await _local.getAll(
           page: page,
-          perPage: 32,
+          perPage: pageSize,
           search: search,
         );
       }

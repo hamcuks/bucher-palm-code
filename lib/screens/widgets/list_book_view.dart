@@ -19,8 +19,8 @@ class ListBookView extends StatefulWidget {
 }
 
 class _ListBookViewState extends State<ListBookView> {
-  static const _pageSize = 32;
-  int pageKey = 1;
+  static const _pageSize = 10;
+  int _pageKey = 1;
   String? search;
 
   final PagingController<int, BookModel> _pagingController =
@@ -32,9 +32,10 @@ class _ListBookViewState extends State<ListBookView> {
     ///
     /// If there's any changes, call the GetBookProccessed event to get the new data
     _pagingController.addPageRequestListener((pageKey) {
-      this.pageKey = pageKey;
+      _pageKey = pageKey;
       sl<GetBookBloc>().add(GetBookProccessed(
         page: pageKey,
+        pageSize: _pageSize,
         isFavorite: widget.isFavorite,
         search: search,
       ));
@@ -73,7 +74,7 @@ class _ListBookViewState extends State<ListBookView> {
                     _pagingController.appendLastPage(items);
                   } else {
                     /// Otherwise, append the items with the next page
-                    final nextPageKey = pageKey + 1;
+                    final nextPageKey = _pageKey + 1;
 
                     _pagingController.appendPage(items, nextPageKey);
                   }

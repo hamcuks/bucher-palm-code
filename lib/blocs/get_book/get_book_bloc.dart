@@ -24,6 +24,7 @@ class GetBookBloc extends Bloc<GetBookEvent, GetBookState> {
       /// Get the data from repository
       final items = await _repo.getAll(
         page: event.page,
+        pageSize: event.pageSize,
         search: event.search,
         isFavorite: event.isFavorite,
       );
