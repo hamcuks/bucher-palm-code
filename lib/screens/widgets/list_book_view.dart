@@ -85,57 +85,62 @@ class _ListBookViewState extends State<ListBookView> {
               }
             },
             builder: (context, state) {
-              return PagedListView<int, BookModel>.separated(
-                pagingController: _pagingController,
-                padding: const EdgeInsets.all(16),
-                separatorBuilder: (_, __) => const SizedBox(height: 16),
-                builderDelegate: PagedChildBuilderDelegate<BookModel>(
-                  /// Show book card loading when refreshing new page
-                  /// or load more item
-                  newPageProgressIndicatorBuilder: (_) => const Skeletonizer(
-                    child: BookCard(),
-                  ),
-
-                  /// Display empty message if the items is empty
-                  noItemsFoundIndicatorBuilder: (_) => const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.folder_open),
-                        SizedBox(height: 8),
-                        Text("There is no books!"),
-                      ],
+              return RefreshIndicator(
+                onRefresh: () async {
+                  _pagingController.refresh();
+                },
+                child: PagedListView<int, BookModel>.separated(
+                  pagingController: _pagingController,
+                  padding: const EdgeInsets.all(16),
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  builderDelegate: PagedChildBuilderDelegate<BookModel>(
+                    /// Show book card loading when refreshing new page
+                    /// or load more item
+                    newPageProgressIndicatorBuilder: (_) => const Skeletonizer(
+                      child: BookCard(),
                     ),
-                  ),
 
-                  /// Display error message if error occurred
-                  newPageErrorIndicatorBuilder: (_) => Center(
-                    child: Text(
-                      _pagingController.error ?? "An error occurred!",
+                    /// Display empty message if the items is empty
+                    noItemsFoundIndicatorBuilder: (_) => const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.folder_open),
+                          SizedBox(height: 8),
+                          Text("There is no books!"),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  /// Display book card loading animation for the first time
-                  firstPageProgressIndicatorBuilder: (_) => Skeletonizer(
-                    child: Column(
-                      children: List.generate(
-                        10,
-                        (index) => const Column(
-                          children: [
-                            BookCard(),
-                            SizedBox(height: 16),
-                          ],
+                    /// Display error message if error occurred
+                    newPageErrorIndicatorBuilder: (_) => Center(
+                      child: Text(
+                        _pagingController.error ?? "An error occurred!",
+                      ),
+                    ),
+
+                    /// Display book card loading animation for the first time
+                    firstPageProgressIndicatorBuilder: (_) => Skeletonizer(
+                      child: Column(
+                        children: List.generate(
+                          10,
+                          (index) => const Column(
+                            children: [
+                              BookCard(),
+                              SizedBox(height: 16),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  /// Display the fetched book items
-                  itemBuilder: (context, item, index) {
-                    return BookCard(
-                      data: item,
-                    );
-                  },
+                    /// Display the fetched book items
+                    itemBuilder: (context, item, index) {
+                      return BookCard(
+                        data: item,
+                      );
+                    },
+                  ),
                 ),
               );
             },
