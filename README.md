@@ -18,6 +18,7 @@ Follow the steps below to run the app project:
 4. **screens/widgets**, collections of all UI widgets such as UserCardWidget
 5. **repositories**, contains set of functions to get data from local or remote data sources
 6. **datasources**, contains two folders: local and remote. The local folder used to hold database queries and the remote folder used to hold the API calls functions
+7. **services**, contains services that used inside the app. For example: DatabaseManager, NetworkClient, NotificationHandler, etc
 
 This app use the MVVM design pattern, it's suite to use because this app does not contains complex features
 
