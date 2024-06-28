@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../injector.dart';
 
@@ -189,16 +191,19 @@ class BookDetailScreen extends StatelessWidget {
                             _readBookButton(
                               icon: Icons.text_fields_outlined,
                               label: "Read Book (Text)",
+                              url: data?.formats.text,
                             ),
                             const SizedBox(height: 8),
                             _readBookButton(
                               icon: Icons.web,
                               label: "Read Book (Web Pages)",
+                              url: data?.formats.webPages,
                             ),
                             const SizedBox(height: 8),
                             _readBookButton(
                               icon: Icons.menu_book_outlined,
                               label: "Read Book (Epub)",
+                              url: data?.formats.epub,
                             )
                           ],
                         )
@@ -214,31 +219,41 @@ class BookDetailScreen extends StatelessWidget {
     );
   }
 
-  Container _readBookButton({
+  Widget _readBookButton({
     required IconData icon,
     required String label,
+    String? url,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade200,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: Colors.blue.shade900,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            label,
-            style: TextStyle(
+    return GestureDetector(
+      onTap: () async {
+        if (url == null) return;
+
+        if (await canLaunchUrlString(url)) {
+          await launchUrlString(url, mode: LaunchMode.externalApplication);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.blue.shade200,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
               color: Colors.blue.shade900,
-              fontWeight: FontWeight.bold,
             ),
-          )
-        ],
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.blue.shade900,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
