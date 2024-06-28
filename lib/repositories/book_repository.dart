@@ -50,7 +50,11 @@ class BookRepository {
       List<BookModel> items = [];
 
       if (isFavorite) {
-        items = await _local.getMyBooks(page: page, perPage: 32);
+        items = await _local.getMyBooks(
+          page: page,
+          perPage: 32,
+          search: search,
+        );
       } else {
         items = await _local.getAll(
           page: page,

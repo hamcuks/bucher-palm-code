@@ -62,15 +62,37 @@ class BookLocalDataSource {
   Future<List<BookModel>> getMyBooks({
     required int page,
     required int perPage,
+    String? search,
   }) async {
     try {
       final collection = _database.isar.Books;
 
-      final Query<BookModel> queries = collection.buildQuery(
-        filter: const FilterCondition.equalTo(
+      List<FilterOperation> filters = [
+        const FilterCondition.equalTo(
           property: "isFavourite",
           value: true,
-        ),
+        )
+      ];
+
+      if (search != null) {
+        filters.add(
+          FilterGroup.or([
+            FilterCondition.contains(
+              property: 'title',
+              value: search,
+              caseSensitive: false,
+            ),
+            FilterCondition.contains(
+              property: 'languages',
+              value: search,
+              caseSensitive: false,
+            ),
+          ]),
+        );
+      }
+
+      final Query<BookModel> queries = collection.buildQuery(
+        filter: FilterGroup.and(filters),
         limit: perPage,
         offset: (page > 1) ? (page - 1) * perPage : 0,
       );
