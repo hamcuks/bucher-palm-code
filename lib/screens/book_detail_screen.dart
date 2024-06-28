@@ -110,15 +110,18 @@ class BookDetailScreen extends StatelessWidget {
                             if (!isSuccess || isDataNull) return null;
 
                             if (data.formats.image != null) {
-                              return CachedNetworkImage(
-                                imageUrl: data.formats.image!,
-                                fit: BoxFit.cover,
-                                errorWidget: (_, __, ___) {
-                                  return Icon(
-                                    Icons.broken_image_outlined,
-                                    color: Colors.blue.shade900,
-                                  );
-                                },
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: CachedNetworkImage(
+                                  imageUrl: data.formats.image!,
+                                  fit: BoxFit.cover,
+                                  errorWidget: (_, __, ___) {
+                                    return Icon(
+                                      Icons.broken_image_outlined,
+                                      color: Colors.blue.shade900,
+                                    );
+                                  },
+                                ),
                               );
                             } else {
                               return Icon(

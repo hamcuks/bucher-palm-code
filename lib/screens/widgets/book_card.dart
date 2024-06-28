@@ -45,15 +45,18 @@ class BookCard extends StatelessWidget {
                 if (data == null) return null;
 
                 if (data!.formats.image != null) {
-                  return CachedNetworkImage(
-                    imageUrl: data!.formats.image!,
-                    fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) {
-                      return Icon(
-                        Icons.broken_image_outlined,
-                        color: Colors.grey.shade400,
-                      );
-                    },
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      imageUrl: data!.formats.image!,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) {
+                        return Icon(
+                          Icons.broken_image_outlined,
+                          color: Colors.grey.shade400,
+                        );
+                      },
+                    ),
                   );
                 } else {
                   return Icon(
