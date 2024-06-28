@@ -57,6 +57,12 @@ class BookDetailScreen extends StatelessWidget {
                       child: BlocListener<AddMyBooksBloc, AddMyBooksState>(
                         listener: (context, state) {
                           if (state.status.isError || state.status.isSuccess) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message!),
+                              ),
+                            );
+
                             /// Call or refresh the data after change the favourite state
                             sl<FindOneBookBloc>()
                                 .add(FindOneBookProccessed(id));
