@@ -23,94 +23,108 @@ class BookCard extends StatelessWidget {
         }
       },
       child: Container(
-        width: double.maxFinite,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 80,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.blue.shade400),
-              ),
-              child: () {
-                if (data == null) return null;
-
-                if (data!.formats.image != null) {
-                  return CachedNetworkImage(
-                    imageUrl: data!.formats.image!,
-                    fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) {
-                      return Icon(
-                        Icons.broken_image_outlined,
-                        color: Colors.grey.shade400,
-                      );
-                    },
-                  );
-                } else {
-                  return Icon(
-                    Icons.image,
-                    color: Colors.grey.shade400,
-                  );
-                }
-              }(),
-            ),
-            const SizedBox(width: 16),
-
-            /// Display the book's title and author
             Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    data?.title ?? "Book Title",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  Container(
+                    width: 80,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.blue.shade400),
                     ),
-                    maxLines: 2,
-                  ),
-                  const SizedBox(height: 8),
-                  _createBookInfo(
-                    Icons.person_2_outlined,
-                    () {
-                      if (data?.authors == null) {
-                        return "Author";
-                      }
+                    child: () {
+                      if (data == null) return null;
 
-                      return data!.authors.map((x) => x.name).join(", ");
+                      if (data!.formats.image != null) {
+                        return CachedNetworkImage(
+                          imageUrl: data!.formats.image!,
+                          fit: BoxFit.cover,
+                          errorWidget: (_, __, ___) {
+                            return Icon(
+                              Icons.broken_image_outlined,
+                              color: Colors.grey.shade400,
+                            );
+                          },
+                        );
+                      } else {
+                        return Icon(
+                          Icons.image,
+                          color: Colors.grey.shade400,
+                        );
+                      }
                     }(),
                   ),
-                  const SizedBox(height: 4),
-                  _createBookInfo(
-                    Icons.translate,
-                    () {
-                      if (data?.languages == null) {
-                        return "Languages";
-                      }
+                  const SizedBox(width: 16),
 
-                      return data!.languages.join(", ").toUpperCase();
-                    }(),
+                  /// Display the book's title and author
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          data?.title ?? "Book Title",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          maxLines: 2,
+                        ),
+                        const SizedBox(height: 8),
+                        _createBookInfo(
+                          Icons.person_2_outlined,
+                          () {
+                            if (data?.authors == null) {
+                              return "Author";
+                            }
+
+                            return data!.authors.map((x) => x.name).join(", ");
+                          }(),
+                        ),
+                        const SizedBox(height: 4),
+                        _createBookInfo(
+                          Icons.translate,
+                          () {
+                            if (data?.languages == null) {
+                              return "Languages";
+                            }
+
+                            return data!.languages.join(", ").toUpperCase();
+                          }(),
+                        ),
+                        const SizedBox(height: 4),
+                        _createBookInfo(
+                          Icons.download_rounded,
+                          "${data?.downloadCount ?? 0} Downloads",
+                        )
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 4),
-                  _createBookInfo(
-                    Icons.download_rounded,
-                    "${data?.downloadCount ?? 0} Downloads",
-                  )
                 ],
               ),
             ),
+            const SizedBox(width: 0),
+            if (data != null && data!.isFavourite) ...[
+              const Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )
+            ]
           ],
         ),
       ),

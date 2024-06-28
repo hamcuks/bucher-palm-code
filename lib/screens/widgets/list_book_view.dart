@@ -57,6 +57,7 @@ class _ListBookViewState extends State<ListBookView> {
             },
           ),
         ),
+        const SizedBox(height: 24),
         Expanded(
           child: BlocConsumer<GetBookBloc, GetBookState>(
             listener: (context, state) {
