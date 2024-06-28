@@ -31,7 +31,7 @@ class AppInputForm extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         filled: true,
-        fillColor: Colors.blue.shade100.withOpacity(0.5),
+        fillColor: Colors.blue.shade100.withOpacity(0.2),
         hintStyle: TextStyle(color: Colors.blue.shade900),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -61,7 +61,7 @@ class AppInputForm extends StatelessWidget {
               );
             }
 
-            return const SizedBox();
+            return const Icon(Icons.search);
           },
         ),
       ),
