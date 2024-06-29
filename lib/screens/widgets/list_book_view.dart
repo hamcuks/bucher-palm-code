@@ -53,7 +53,9 @@ class _ListBookViewState extends State<ListBookView> {
 
     /// Refresh paging controller when book collection changed
     _isarListener = listener.listen((_) {
-      _pagingController.refresh();
+      /// Only refresh the pagingController if the page is My Books
+      /// because we want to know the updated items after isFavourite state changes
+      if (widget.isFavorite) _pagingController.refresh();
     });
 
     super.initState();
