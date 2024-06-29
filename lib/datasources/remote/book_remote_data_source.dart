@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:bucher_palm_code/models/api_response.dart';
-import 'package:bucher_palm_code/models/book_model.dart';
+import '../../models/api_response.dart';
+import '../../models/book_model.dart';
 import 'package:dio/dio.dart';
 
 /// Contains set of function to book data

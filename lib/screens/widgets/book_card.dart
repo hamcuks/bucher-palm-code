@@ -1,5 +1,5 @@
-import 'package:bucher_palm_code/models/book_model.dart';
-import 'package:bucher_palm_code/screens/book_detail_screen.dart';
+import '../../models/book_model.dart';
+import '../book_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

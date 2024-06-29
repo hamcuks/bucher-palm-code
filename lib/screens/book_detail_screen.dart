@@ -1,10 +1,9 @@
-import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
-import 'package:bucher_palm_code/blocs/find_one/find_one_book_bloc.dart';
+import '../blocs/add_my_books/add_my_books_bloc.dart';
+import '../blocs/find_one/find_one_book_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../injector.dart';

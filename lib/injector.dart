@@ -1,10 +1,10 @@
-import 'package:bucher_palm_code/blocs/add_my_books/add_my_books_bloc.dart';
-import 'package:bucher_palm_code/blocs/find_one/find_one_book_bloc.dart';
-import 'package:bucher_palm_code/blocs/get_book/get_book_bloc.dart';
-import 'package:bucher_palm_code/datasources/local/book_local_data_source.dart';
-import 'package:bucher_palm_code/datasources/remote/book_remote_data_source.dart';
-import 'package:bucher_palm_code/repositories/book_repository.dart';
-import 'package:bucher_palm_code/services/database_manager.dart';
+import 'blocs/add_my_books/add_my_books_bloc.dart';
+import 'blocs/find_one/find_one_book_bloc.dart';
+import 'blocs/get_book/get_book_bloc.dart';
+import 'datasources/local/book_local_data_source.dart';
+import 'datasources/remote/book_remote_data_source.dart';
+import 'repositories/book_repository.dart';
+import 'services/database_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 

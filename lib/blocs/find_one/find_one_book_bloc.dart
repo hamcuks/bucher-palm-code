@@ -1,4 +1,4 @@
-import 'package:bucher_palm_code/repositories/book_repository.dart';
+import '../../repositories/book_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 

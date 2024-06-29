@@ -1,5 +1,5 @@
-import 'package:bucher_palm_code/models/book_model.dart';
-import 'package:bucher_palm_code/repositories/book_repository.dart';
+import '../../models/book_model.dart';
+import '../../repositories/book_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 

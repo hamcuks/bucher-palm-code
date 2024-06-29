@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:bucher_palm_code/repositories/book_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../repositories/book_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'add_my_books_event.dart';

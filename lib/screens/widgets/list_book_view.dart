@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bucher_palm_code/blocs/get_book/get_book_bloc.dart';
-import 'package:bucher_palm_code/injector.dart';
-import 'package:bucher_palm_code/models/book_model.dart';
-import 'package:bucher_palm_code/services/database_manager.dart';
+import '../../blocs/get_book/get_book_bloc.dart';
+import '../../injector.dart';
+import '../../models/book_model.dart';
+import '../../services/database_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

@@ -1,7 +1,7 @@
-import 'package:bucher_palm_code/datasources/local/book_local_data_source.dart';
-import 'package:bucher_palm_code/datasources/remote/book_remote_data_source.dart';
-import 'package:bucher_palm_code/models/api_response.dart';
-import 'package:bucher_palm_code/models/book_model.dart';
+import '../datasources/local/book_local_data_source.dart';
+import '../datasources/remote/book_remote_data_source.dart';
+import '../models/api_response.dart';
+import '../models/book_model.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class BookRepository {

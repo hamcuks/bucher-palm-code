@@ -1,5 +1,5 @@
-import 'package:bucher_palm_code/models/book_model.dart';
-import 'package:bucher_palm_code/services/database_manager.dart';
+import '../../models/book_model.dart';
+import '../../services/database_manager.dart';
 import 'package:isar/isar.dart';
 
 class BookLocalDataSource {

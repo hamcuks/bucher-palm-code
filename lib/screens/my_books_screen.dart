@@ -1,4 +1,4 @@
-import 'package:bucher_palm_code/screens/widgets/list_book_view.dart';
+import 'widgets/list_book_view.dart';
 import 'package:flutter/material.dart';
 
 class MyBooksScreen extends StatelessWidget {
