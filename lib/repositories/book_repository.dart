@@ -7,16 +7,19 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 class BookRepository {
   final BookRemoteDataSource _remote;
   final BookLocalDataSource _local;
+  final InternetConnection _connection;
 
   const BookRepository({
     required BookRemoteDataSource remoteDataSource,
     required BookLocalDataSource localDataSource,
+    required InternetConnection internetConnection,
   })  : _remote = remoteDataSource,
-        _local = localDataSource;
+        _local = localDataSource,
+        _connection = internetConnection;
 
   /// Check internet connection status
   Future<bool> get _hasInternet async {
-    return InternetConnection().hasInternetAccess;
+    return _connection.hasInternetAccess;
   }
 
   /// Return Single data of Book Model

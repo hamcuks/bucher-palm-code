@@ -70,9 +70,9 @@ class _ListBookViewState extends State<ListBookView> {
 
   void _checkInternetConnection() async {
     /// Check the initial connection state and listen the state change
-    _hasInternet.value = await InternetConnection().hasInternetAccess;
+    _hasInternet.value = await sl<InternetConnection>().hasInternetAccess;
 
-    _internetListener = InternetConnection().onStatusChange.listen((state) {
+    _internetListener = sl<InternetConnection>().onStatusChange.listen((state) {
       _hasInternet.value = state == InternetStatus.connected;
     });
   }

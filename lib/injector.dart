@@ -1,3 +1,5 @@
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+
 import 'blocs/add_my_books/add_my_books_bloc.dart';
 import 'blocs/find_one/find_one_book_bloc.dart';
 import 'blocs/get_book/get_book_bloc.dart';
@@ -13,6 +15,7 @@ final GetIt sl = GetIt.instance;
 void setupDependency() {
   /// External Package
   sl.registerLazySingleton<Dio>(() => Dio());
+  sl.registerSingleton<InternetConnection>(InternetConnection());
   sl.registerSingleton<DatabaseManager>(DatabaseManager.instance);
 
   /// Remote Data Sources
@@ -29,6 +32,7 @@ void setupDependency() {
     () => BookRepository(
       remoteDataSource: sl<BookRemoteDataSource>(),
       localDataSource: sl<BookLocalDataSource>(),
+      internetConnection: sl<InternetConnection>(),
     ),
   );
 
