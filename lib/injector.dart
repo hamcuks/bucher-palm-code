@@ -13,7 +13,7 @@ final GetIt sl = GetIt.instance;
 void setupDependency() {
   /// External Package
   sl.registerLazySingleton<Dio>(() => Dio());
-  sl.registerLazySingleton<DatabaseManager>(() => DatabaseManager.instance);
+  sl.registerSingleton<DatabaseManager>(DatabaseManager.instance);
 
   /// Remote Data Sources
   sl.registerLazySingleton<BookRemoteDataSource>(
