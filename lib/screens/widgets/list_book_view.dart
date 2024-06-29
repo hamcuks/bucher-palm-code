@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+
 import '../../blocs/get_book/get_book_bloc.dart';
 import '../../injector.dart';
 import '../../models/book_model.dart';
@@ -29,6 +31,9 @@ class _ListBookViewState extends State<ListBookView> {
       PagingController(firstPageKey: 1);
   late final TextEditingController _searchController;
   late final StreamSubscription<void> _isarListener;
+  late final StreamSubscription<InternetStatus> _internetListener;
+
+  final ValueNotifier<bool> _hasInternet = ValueNotifier(true);
 
   @override
   void initState() {
@@ -58,12 +63,24 @@ class _ListBookViewState extends State<ListBookView> {
       if (widget.isFavorite) _pagingController.refresh();
     });
 
+    _checkInternetConnection();
+
     super.initState();
+  }
+
+  void _checkInternetConnection() async {
+    /// Check the initial connection state and listen the state change
+    _hasInternet.value = await InternetConnection().hasInternetAccess;
+
+    _internetListener = InternetConnection().onStatusChange.listen((state) {
+      _hasInternet.value = state == InternetStatus.connected;
+    });
   }
 
   @override
   void dispose() {
     _isarListener.cancel();
+    _internetListener.cancel();
     _pagingController.dispose();
     _searchController.dispose();
     super.dispose();
@@ -87,6 +104,32 @@ class _ListBookViewState extends State<ListBookView> {
           ),
         ),
         const SizedBox(height: 24),
+        ValueListenableBuilder(
+          valueListenable: _hasInternet,
+          builder: (context, state, _) {
+            if (state) return const SizedBox();
+
+            return Column(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade100.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    "You don't have internet access. The data might not updated!",
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+              ],
+            );
+          },
+        ),
         Expanded(
           child: BlocConsumer<GetBookBloc, GetBookState>(
             listener: (context, state) {
