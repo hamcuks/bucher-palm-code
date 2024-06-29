@@ -10,7 +10,7 @@ class BookLocalDataSource {
   /// Return single data of Book Model
   Future<BookModel?> findOne({required int id}) async {
     try {
-      final collection = _database.isar.Books;
+      final collection = (await _database.isar).Books;
 
       return collection.get(id);
     } catch (e) {
@@ -25,7 +25,7 @@ class BookLocalDataSource {
     String? search,
   }) async {
     try {
-      final collection = _database.isar.Books;
+      final collection = (await _database.isar).Books;
 
       List<FilterOperation> filters = [];
 
@@ -65,7 +65,7 @@ class BookLocalDataSource {
     String? search,
   }) async {
     try {
-      final collection = _database.isar.Books;
+      final collection = (await _database.isar).Books;
 
       List<FilterOperation> filters = [
         const FilterCondition.equalTo(
@@ -108,7 +108,7 @@ class BookLocalDataSource {
   /// Params: required items
   Future<bool> store(List<BookModel> items) async {
     try {
-      final isar = _database.isar;
+      final isar = await _database.isar;
 
       await isar.writeTxn(() async {
         /// Iterate the book items then check the existing data.
@@ -134,7 +134,7 @@ class BookLocalDataSource {
   /// Params: required id
   Future<bool> addToMyBooks(int id) async {
     try {
-      final isar = _database.isar;
+      final isar = await _database.isar;
 
       await isar.writeTxn(() async {
         BookModel? data = await isar.Books.get(id);

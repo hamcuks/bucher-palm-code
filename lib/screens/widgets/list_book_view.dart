@@ -52,9 +52,18 @@ class _ListBookViewState extends State<ListBookView> {
 
     _searchController = TextEditingController();
 
+    _watchBooksCollection();
+
+    _checkInternetConnection();
+
+    super.initState();
+  }
+
+  void _watchBooksCollection() async {
+    final isar = await sl<DatabaseManager>().isar;
+
     /// Watch Books collection
-    final listener =
-        sl<DatabaseManager>().isar.Books.watchLazy(fireImmediately: true);
+    final listener = isar.Books.watchLazy(fireImmediately: true);
 
     /// Refresh paging controller when book collection changed
     _isarListener = listener.listen((_) {
@@ -62,10 +71,6 @@ class _ListBookViewState extends State<ListBookView> {
       /// because we want to know the updated items after isFavourite state changes
       if (widget.isFavorite) _pagingController.refresh();
     });
-
-    _checkInternetConnection();
-
-    super.initState();
   }
 
   void _checkInternetConnection() async {
